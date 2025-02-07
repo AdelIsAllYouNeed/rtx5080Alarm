@@ -1,3 +1,39 @@
-<audio id="alarmSound" loop autoplay>
-    <source src="https://www.soundjay.com/buttons/sounds/button-1.mp3" type="audio/mpeg">
-</audio>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTX 5080 Alarm</title>
+</head>
+<body>
+    <h1>RTX 5080 Alarm</h1>
+    <p>This alarm will loop indefinitely when triggered.</p>
+
+    <audio id="alarmSound" loop autoplay>
+        <source src="https://www.soundjay.com/buttons/sounds/button-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var audio = document.getElementById("alarmSound");
+
+            function playAlarm() {
+                audio.play().catch(error => {
+                    console.log("Autoplay blocked. Retrying in 5 seconds...");
+                    setTimeout(playAlarm, 5000); // Retry every 5 seconds
+                });
+            }
+
+            playAlarm(); // Attempt to play immediately
+
+            // Ensure it loops indefinitely even if Chrome tries to stop it
+            setInterval(() => {
+                if (audio.paused) {
+                    console.log("Restarting audio...");
+                    playAlarm();
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
