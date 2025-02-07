@@ -7,6 +7,10 @@
 </head>
 <body>
     <h1>RTX 5080 Alarm</h1>
+
+            <a href="https://www.bhphotovideo.com/c/product/1875716-REG/gigabyte_gv_n5080wf3oc_16gd_geforce_rtx_5080_windforce.html" target="_blank">
+                Buy on B&H Photo Video
+            </a>
     <p>The alarm will loop indefinitely when triggered.</p>
 
     <audio id="alarmSound" loop>
