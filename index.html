@@ -7,33 +7,37 @@
 </head>
 <body>
     <h1>RTX 5080 Alarm</h1>
-    <p>This alarm will loop indefinitely when triggered.</p>
+    <p>The alarm will loop indefinitely when triggered.</p>
 
-    <audio id="alarmSound" loop autoplay>
+    <audio id="alarmSound" loop>
         <source src="https://www.soundjay.com/buttons/sounds/button-1.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var audio = document.getElementById("alarmSound");
-
-            function playAlarm() {
-                audio.play().catch(error => {
-                    console.log("Autoplay blocked. Retrying in 5 seconds...");
-                    setTimeout(playAlarm, 5000); // Retry every 5 seconds
-                });
+        document.addEventListener("visibilitychange", function() {
+            if (document.visibilityState === "hidden") {
+                console.log("Tab is hidden - reopening to keep sound playing.");
+                window.open(window.location.href, "_blank", "width=300,height=200");
             }
-
-            playAlarm(); // Attempt to play immediately
-
-            // Ensure it loops indefinitely even if Chrome tries to stop it
-            setInterval(() => {
-                if (audio.paused) {
-                    console.log("Restarting audio...");
-                    playAlarm();
-                }
-            }, 5000);
         });
+
+        function playAlarm() {
+            var audio = document.getElementById("alarmSound");
+            audio.play().catch(error => {
+                console.log("Autoplay blocked, retrying...");
+                setTimeout(playAlarm, 2000); // Retry every 2 seconds
+            });
+        }
+
+        setInterval(() => {
+            var audio = document.getElementById("alarmSound");
+            if (audio.paused) {
+                console.log("Restarting audio...");
+                playAlarm();
+            }
+        }, 5000);
+
+        playAlarm(); // Try playing immediately
     </script>
 </body>
 </html>
