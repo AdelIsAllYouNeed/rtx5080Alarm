@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTX 5080 Alarm</title>
+</head>
+<body>
+    <h1>RTX 5080 Alarm</h1>
+
+            <a href="https://www.newegg.com/global/sa-en/gigabyte-windforce-gv-n5080wf3oc-16gd-nvidia-geforce-rtx-5080-16gb-gddr7/p/N82E16814932754?Item=N82E16814932754" target="_blank">
+                Buy on Newegg Saudi Arabia
+            </a>
+    <p>The alarm will loop indefinitely when triggered.</p>
+
+    <audio id="alarmSound" loop>
+        <source src="https://www.soundjay.com/buttons/sounds/button-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener("visibilitychange", function() {
+            if (document.visibilityState === "hidden") {
+                console.log("Tab is hidden - reopening to keep sound playing.");
+                window.open(window.location.href, "_blank", "width=300,height=200");
+            }
+        });
+
+        function playAlarm() {
+            var audio = document.getElementById("alarmSound");
+            audio.play().catch(error => {
+                console.log("Autoplay blocked, retrying...");
+                setTimeout(playAlarm, 2000); // Retry every 2 seconds
+            });
+        }
+
+        setInterval(() => {
+            var audio = document.getElementById("alarmSound");
+            if (audio.paused) {
+                console.log("Restarting audio...");
+                playAlarm();
+            }
+        }, 5000);
+
+        playAlarm(); // Try playing immediately
+    </script>
+</body>
+</html>
